@@ -4,7 +4,7 @@ This is a [Docker](http://www.docker.com) image using [PHP5-FPM](http://php-fpm.
 
 
 A few examples how to run these containers
-- ```docker run -d -v ${PWD}:/var/www:rw --name phpfpm avnir/phpfpm```
+- ```docker run -d --name phpfpm avnir/php5-fpm```
 
 
 Feedback or improvements are welcome.

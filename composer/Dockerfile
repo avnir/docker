@@ -22,7 +22,7 @@ RUN echo "export PATH=~/.composer/vendor/bin/:$PATH" && \
 
 # We need to create an empty file, otherwise the volume will belong to root.
 # This is probably a Docker bug.
-RUN touch /var/www/placeholder && chown -R www-data:www-data /var/www
+RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-data /var/www
 
 ENTRYPOINT ["composer"]
 # CMD ["--help"]
