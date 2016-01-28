@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.18
+FROM ubuntu:latest
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
