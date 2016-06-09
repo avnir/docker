@@ -1,23 +1,12 @@
 FROM avnir/laravel-artisan:latest
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-
-RUN apt-get update && apt-get install -y \
-            software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php5-5.6 && \
-    apt-get update && apt-get install -y --force-yes \
+RUN apt-get update && apt-get install -y --force-yes \
             php5-fpm \
             php5-imap \
             php5-json \
             --no-install-recommends && \
-    apt-get remove -y --force-yes --purge software-properties-common && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -64,16 +53,10 @@ RUN echo "\n\nopcache.memory_consumption=128" >> /etc/php5/mods-available/opcach
     echo "opcache.enable_file_override=1" >> /etc/php5/mods-available/opcache.ini && \
     echo "opcache.save_comments=0" >> /etc/php5/mods-available/opcache.ini
 
-RUN usermod -u 1000 www-data
 
 # We need to create an empty file, otherwise the volume will belong to root.
-# This is probably a Docker bug.
 RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-data /var/www
-
-VOLUME /var/www
-WORKDIR /var/www
 
 
 EXPOSE 9000
-
 ENTRYPOINT ["/usr/sbin/php5-fpm", "-FO"]

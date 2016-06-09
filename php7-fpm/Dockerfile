@@ -1,20 +1,23 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
-ENV LC_ALL C
+
 ENV DEBIAN_FRONTEND noninteractive
+ENV TERM xterm
 ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV TERM dumb
+
 
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN apt-get update && apt-get install -y \
-            software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php-7.0 && \
-    apt-get update && apt-get install -y --force-yes \
+
+COPY start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
+
+
+RUN apt-get update && apt-get install -y --force-yes \
             php7.0-cli \
             php7.0-gd \
             php7.0-curl \
@@ -23,6 +26,7 @@ RUN apt-get update && apt-get install -y \
             php7.0-fpm \
             php7.0-imap \
             php7.0-json \
+            php7.0-xml \
             libsqlite3-dev \
             php7.0-sqlite3 \
             sqlite3 \
@@ -79,15 +83,17 @@ RUN echo "\n\nopcache.memory_consumption=128" >> /etc/php/7.0/mods-available/opc
     echo "opcache.enable_file_override=1" >> /etc/php/7.0/mods-available/opcache.ini && \
     echo "opcache.save_comments=0" >> /etc/php/7.0/mods-available/opcache.ini
 
-# RUN usermod -u 1000 www-data
+
 
 # We need to create an empty file, otherwise the volume will belong to root.
-# This is probably a Docker bug.
 RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-data /var/www
+
 
 VOLUME /var/www
 WORKDIR /var/www
 
+
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/sbin/php-fpm7.0", "-FO"]
+#ENTRYPOINT ["/usr/sbin/php-fpm7.0", "-FO"]
+CMD ["/usr/local/bin/start-container"]
