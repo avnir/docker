@@ -1,4 +1,4 @@
-FROM avnir/laravel-artisan:latest
+FROM avnir/php5-fpm:latest
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 
