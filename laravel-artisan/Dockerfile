@@ -32,6 +32,4 @@ RUN apt-get update && apt-get install -qy software-properties-common && \
 
 
 WORKDIR /var/www
-
-
 ENTRYPOINT ["php", "artisan"]
