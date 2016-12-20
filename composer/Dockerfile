@@ -2,9 +2,9 @@ FROM avnir/laravel-artisan:latest
 MAINTAINER Avni Rexhepi <arexhepi@gmail.com>
 
 
-RUN apt-get update && apt-get install -y --force-yes \
+RUN apt-get update && apt-get install -y \
             git \
-            php5-readline \
+            php5.6-readline \
             --no-install-recommends && \
     apt-get -y autoremove && \
     apt-get clean && \
@@ -27,4 +27,3 @@ RUN mkdir -p /var/www/ && touch /var/www/placeholder && chown -R www-data:www-da
 
 
 ENTRYPOINT ["composer"]
-# CMD ["--help"]

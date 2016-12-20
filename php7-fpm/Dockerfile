@@ -17,7 +17,7 @@ COPY start-container /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container
 
 
-RUN apt-get update && apt-get install -y --force-yes \
+RUN apt-get update && apt-get install -y \
             php7.0-cli \
             php7.0-gd \
             php7.0-curl \
