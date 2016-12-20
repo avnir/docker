@@ -18,8 +18,8 @@ RUN chmod +x /usr/local/bin/start-container
 
 
 RUN apt-get update && apt-get install -qy software-properties-common && \
-    add-apt-repository -y ppa:ondrej/php
-RUN apt-get update && apt-get install -y \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && apt-get install -y \
             php5.6-cli \
             php5.6-gd \
             php5.6-curl \
@@ -33,8 +33,9 @@ RUN apt-get update && apt-get install -y \
             libsqlite3-dev \
             php5.6-sqlite3 \
             sqlite3 \
+            unzip \
             --no-install-recommends && \
-    apt-get remove -y --force-yes --purge software-properties-common && \
+    apt-get remove -y --purge software-properties-common && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -98,5 +99,5 @@ WORKDIR /var/www
 
 EXPOSE 9000
 
-#ENTRYPOINT ["/usr/sbin/php-fpm5.6", "-FO"]
+
 CMD ["/usr/local/bin/start-container"]
